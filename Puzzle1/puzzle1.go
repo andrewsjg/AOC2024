@@ -23,7 +23,7 @@ func readinput(inputfile string) (left []int, right []int) {
 	// Read the file line by line
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		// Split the line by the tab character
+
 		line := strings.Split(scanner.Text(), " ")
 
 		leftNum, err := strconv.Atoi(line[0])
