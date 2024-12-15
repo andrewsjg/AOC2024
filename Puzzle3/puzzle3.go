@@ -103,7 +103,7 @@ func processInput(inputFile string) []byte {
 }
 
 func removeBetween(input, start, end string) string {
-	// Define the regular expression pattern with the (?s) flag
+	// Define the regular expression pattern with the (?s) flag to ensure the pattern matches across multiple lines
 	pattern := fmt.Sprintf(`(?s)%s.*?%s`, regexp.QuoteMeta(start), regexp.QuoteMeta(end))
 
 	// Compile the regular expression
