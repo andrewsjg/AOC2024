@@ -99,7 +99,7 @@ func printMap(data map[Point]rune, xDim int, yDim int) {
 	}
 }
 
-func getAntiNodes(nodes map[rune][]Point, xDim int, yDim int, debug bool) map[Point]struct{} {
+func getAntiNodes(nodes map[rune][]Point, xDim int, yDim int, part2 bool, debug bool) map[Point]struct{} {
 	antiNodes := make(map[Point]struct{})
 
 	for node, loc := range nodes {
@@ -139,6 +139,31 @@ func getAntiNodes(nodes map[rune][]Point, xDim int, yDim int, debug bool) map[Po
 					antiNodes[an2] = struct{}{}
 				}
 
+				if part2 {
+
+					antiNodes[testNode] = struct{}{}
+					antiNodes[sameNode] = struct{}{}
+
+					for an1.X >= 0 && an1.X < xDim && an1.Y >= 0 && an1.Y < yDim {
+
+						antiNodes[an1] = struct{}{}
+
+						an1.X += xd
+						an1.Y += yd
+
+					}
+
+					for an2.X >= 0 && an2.X < xDim && an2.Y >= 0 && an2.Y < yDim {
+
+						antiNodes[an2] = struct{}{}
+
+						an2.X -= xd
+						an2.Y -= yd
+
+					}
+
+				}
+
 			}
 		}
 
@@ -162,7 +187,9 @@ func main() {
 	antennaMap, xDim, yDim := getMap("input.txt")
 	antennaLocs := getAntennaLocs(antennaMap)
 
-	antiNodes := getAntiNodes(antennaLocs, xDim, yDim, false)
-	fmt.Printf("Total Antinodes: %d\n", len(antiNodes))
+	p1antiNodes := getAntiNodes(antennaLocs, xDim, yDim, false, false)
+	p2antiNodes := getAntiNodes(antennaLocs, xDim, yDim, true, false)
+
+	fmt.Printf("Total Antinodes for Part 1: %d\nTotal Antinodes ofr Part 2: %d\n", len(p1antiNodes), len(p2antiNodes))
 
 }
