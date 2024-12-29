@@ -25,5 +25,5 @@ go.work.sum
 .env
 
 input.txt
-sample_input.txt
+sample_input*.*
 temp*.*
