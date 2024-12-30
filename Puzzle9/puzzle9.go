@@ -235,10 +235,8 @@ func defragDiskPart2(diskLayout SparseArray) SparseArray {
 				gapIndex := defraged.FindLowestGap(fileSize)
 
 				if gapIndex > 0 {
-
 					if gapIndex < i {
 						defraged.MoveBlock(i+1, i+fileSize, gapIndex)
-
 					}
 				}
 
@@ -302,6 +300,7 @@ func printSparseArray(sa SparseArray) {
 func main() {
 
 	// I made this SO much harder than it needed to be
+	// I thought sparse arrays would be clever. But I think they made it harder.
 	data := readInput("input.txt")
 
 	diskLayout := createDiskLayout(data)
