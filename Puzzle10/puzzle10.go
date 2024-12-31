@@ -156,39 +156,45 @@ func getMap(inputFile string) TopoMap {
 	return topMap
 }
 
-func followTrail(tp TopoMap, trailStart Point, exits map[Point]bool) int {
+func followTrail(tp TopoMap, trailStart Point, exits map[Point]bool, part2 bool) int {
 
 	score := 0
 
 	if tp.GetValueAtPoint(trailStart) == 9 {
 
-		if _, exists := exits[trailStart]; !exists {
+		// For part 2 we actually want to count all the ways to reach an exit, not just the exits
+		// So count every exit even if we've already seen it.
+		if part2 {
+			return 1
+		}
 
+		if _, exists := exits[trailStart]; !exists {
 			exits[trailStart] = true
 			return 1
 		}
+
 		return 0
 
 	}
 
 	if tp.TopoMove(trailStart, 'U').X != -1 {
 
-		score += followTrail(tp, tp.TopoMove(trailStart, 'U'), exits)
+		score += followTrail(tp, tp.TopoMove(trailStart, 'U'), exits, part2)
 	}
 
 	if tp.TopoMove(trailStart, 'D').X != -1 {
 
-		score += followTrail(tp, tp.TopoMove(trailStart, 'D'), exits)
+		score += followTrail(tp, tp.TopoMove(trailStart, 'D'), exits, part2)
 	}
 
 	if tp.TopoMove(trailStart, 'L').X != -1 {
 
-		score += followTrail(tp, tp.TopoMove(trailStart, 'L'), exits)
+		score += followTrail(tp, tp.TopoMove(trailStart, 'L'), exits, part2)
 	}
 
 	if tp.TopoMove(trailStart, 'R').X != -1 {
 
-		score += followTrail(tp, tp.TopoMove(trailStart, 'R'), exits)
+		score += followTrail(tp, tp.TopoMove(trailStart, 'R'), exits, part2)
 	}
 
 	return score
@@ -203,10 +209,16 @@ func main() {
 
 	for _, trailHead := range th {
 		exits := make(map[Point]bool)
-		score += followTrail(topoMap, trailHead, exits)
-
+		score += followTrail(topoMap, trailHead, exits, false)
 	}
 
 	fmt.Println("Part 1 Score:", score)
 
+	score = 0
+	for _, trailHead := range th {
+		exits := make(map[Point]bool)
+		score += followTrail(topoMap, trailHead, exits, true)
+	}
+
+	fmt.Println("Part 2 Score:", score)
 }
