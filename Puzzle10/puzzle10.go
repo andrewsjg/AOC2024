@@ -89,6 +89,10 @@ func (tp *TopoMap) MoveDown(p Point) Point {
 	return Point{-1, -1}
 }
 
+// This will follow a trail if the path remains within the bounds of the map
+// and the next value on the path is no more than 1 more than the previous.
+// If there is no valid path, it will return a point with coordinates -1, -1
+
 func (tp *TopoMap) TopoMove(p Point, direction rune) Point {
 
 	switch direction {
